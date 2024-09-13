@@ -21,11 +21,11 @@ func (h *UserHandler) GetAllUsers(w http.ResponseWriter, r *http.Request) {
 	users, err := h.service.GetAllUsers()
 
 	if err != nil {
-		http.Error(w, "error fetching users", http.StatusInternalServerError)
+		utils.SendError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	json.NewEncoder(w).Encode(users)
+	utils.SendSuccess(w, users, http.StatusOK)
 }
 
 func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
@@ -33,7 +33,7 @@ func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 	var user models.UserCreateInput
 
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		utils.SendError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -43,7 +43,7 @@ func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := h.service.CreateUser(&user); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		utils.SendError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 

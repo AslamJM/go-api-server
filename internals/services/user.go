@@ -37,6 +37,10 @@ func (s *UserService) CreateUser(input *models.UserCreateInput) error {
 
 }
 
+func (s *UserService) FindByUsername(username string) (*models.User, error) {
+	return s.repo.GetUserByUsername(username)
+}
+
 func hashPassword(p string) (s string, err error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(p), bcrypt.DefaultCost)
 	if err != nil {
