@@ -13,7 +13,7 @@ import (
 
 var DB *gorm.DB
 
-func InitDB() {
+func InitDB() *gorm.DB {
 	var err error
 
 	user := os.Getenv("DB_USER")
@@ -35,4 +35,5 @@ func InitDB() {
 	}
 
 	log.Println("Connected to MySQL database")
+	return DB
 }
