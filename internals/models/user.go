@@ -6,14 +6,14 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-var validate *validator.Validate
+var Validate *validator.Validate
 
 func NewValidator() {
-	validate = validator.New()
+	Validate = validator.New()
 }
 
 func (u *UserCreateInput) ValidateStruct() error {
-	return validate.Struct(u)
+	return Validate.Struct(u)
 }
 
 type User struct {
